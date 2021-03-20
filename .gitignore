@@ -9,3 +9,9 @@
 profile_default/
 ipython_config.py
 ### End JupyterNotebooks ###
+
+.DS_Store
+
+# Generated files
+temporary.py
+multidimensional.txt
