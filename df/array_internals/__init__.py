@@ -1,0 +1,1 @@
+from df.array_internals.array_details import show_array_details

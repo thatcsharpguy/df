@@ -1,3 +1,6 @@
+# PyCharm
+.idea/*
+
 # pyenv configuration file
 .python-version
 
@@ -15,3 +18,7 @@ ipython_config.py
 # Generated files
 temporary.py
 multidimensional.txt
+
+# Other assets
+*.svg
+*.sketch
