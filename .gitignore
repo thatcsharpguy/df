@@ -29,3 +29,6 @@ multidimensional.txt
 # Other assets
 *.svg
 *.sketch
+*.ai
+*_files/
+*.md
