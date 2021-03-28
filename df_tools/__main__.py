@@ -57,7 +57,10 @@ def clean():
 
         if not nb.cells[-1]['source']:
             nb.cells.pop()
-        import pdb; pdb.set_trace()
+
+        for cell_id, cell in enumerate(nb.cells):
+            cell["id"] = f"{notebook.stem}-{cell_id}"
+
         ipynb, _ = exporter.from_notebook_node(nb)
         with open(f"{notebook.stem}.ipynb", "w") as writable:
             writable.write(ipynb)
