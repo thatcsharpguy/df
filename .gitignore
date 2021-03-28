@@ -13,6 +13,13 @@ profile_default/
 ipython_config.py
 ### End JupyterNotebooks ###
 
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
 .DS_Store
 
 # Generated files
