@@ -2,7 +2,7 @@ from typing import List
 
 import numpy as np
 
-SIZE_TYPES = {np.float64: (11, 53), np.float32: (8, 24)}
+SIZE_TYPES = {np.float64: (11, 53), np.float32: (8, 24), np.float128: (15, 113)}
 
 
 def join(*args):
@@ -30,8 +30,8 @@ def show_binary_float(
     bit_chunks = slice_string(bit_word, 1, exponent_size, mantissa_size)
 
     sign = -1 if bit_word[0:1] == "1" else 1
-    exponent = int(bit_word[1: 1 + exponent_size], base=2) - bias
-    mantissa = bit_word_to_mantissa_val(bit_word[1 + exponent_size: total_width])
+    exponent = int(bit_word[1 : 1 + exponent_size], base=2) - bias
+    mantissa = bit_word_to_mantissa_val(bit_word[1 + exponent_size : total_width])
     infinite = exponent == 2 ** (exponent_size - 1)
 
     print(
@@ -64,7 +64,7 @@ def slice_string(word: str, *steps: List[int]) -> List[str]:
 
     i = 0
     for step in steps:
-        out.append(word[i: i + step])
+        out.append(word[i : i + step])
         i = i + step
 
     return out

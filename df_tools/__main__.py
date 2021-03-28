@@ -8,6 +8,7 @@ from nbconvert.preprocessors import ClearOutputPreprocessor
 
 FILE_PATTERN = re.compile(r"^[0-9]{2}\w?-[a-zA-Z-]+$")
 
+
 @click.group()
 def cli():
     pass
@@ -17,6 +18,7 @@ from traitlets.config import Config
 
 c = Config()
 c.NotebookExporter.preprocessors = [ClearOutputPreprocessor()]
+
 
 def get_files(extension: str):
     for file in Path(".").glob(f"*.{extension}"):
@@ -34,7 +36,7 @@ def markdown():
             nb = nbformat.read(nb_file, as_version=4)
         executor.preprocess(nb)
 
-        if not nb.cells[-1]['source']:
+        if not nb.cells[-1]["source"]:
             nb.cells.pop()
 
         markdown, _ = exporter.from_notebook_node(nb)
@@ -42,20 +44,18 @@ def markdown():
             writable.write(markdown)
 
 
-
-
 @cli.command()
 def clean():
     for md in get_files("md"):
         md.unlink()
 
-    exporter= NotebookExporter(config=c)
+    exporter = NotebookExporter(config=c)
     for notebook in get_files("ipynb"):
 
         with open(notebook) as nb_file:
             nb = nbformat.read(nb_file, as_version=4)
 
-        if not nb.cells[-1]['source']:
+        if not nb.cells[-1]["source"]:
             nb.cells.pop()
 
         for cell_id, cell in enumerate(nb.cells):
@@ -66,5 +66,5 @@ def clean():
             writable.write(ipynb)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     cli()

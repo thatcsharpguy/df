@@ -10,6 +10,9 @@ matplotlib = "*"
 
 [dev-packages]
 click = "*"
+isort = "*"
+black = ">18.*"
 
 [requires]
 python_version = "3.8"
+

@@ -1,4 +1,5 @@
 NB_FILES=$(shell find . -path "./*.ipynb" -not -path "./.ipynb_checkpoints/*")
+PY_FILES=$(shell find . -path "./*.py" -not -path "./.ipynb_checkpoints/*")
 MD_FILES=$(shell find . -type f -regex '.*(m|h)$')
 
 build:
@@ -8,5 +9,9 @@ build:
 md:
 	pipenv run python -m df_tools markdown
 
-clean:
+style:
+	pipenv run isort df df_utils
+	pipenv run black $(PY_FILES)
+
+clean: style
 	pipenv run python -m df_tools clean
