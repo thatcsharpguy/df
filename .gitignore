@@ -13,6 +13,15 @@ profile_default/
 ipython_config.py
 ### End JupyterNotebooks ###
 
+.DS_Store
+
+# Generated files
+temporary.py
+multidimensional.txt
+
+# Markdown  
+*.md
+*_files/*
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -20,15 +29,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-.DS_Store
-
-# Generated files
-temporary.py
-multidimensional.txt
-
-# Other assets
-*.svg
-*.sketch
+# Private assests
+*.drawio
+*.pxm
 *.ai
-*_files/
-*.md
+*.sketch
+*.svg

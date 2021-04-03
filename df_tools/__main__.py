@@ -32,7 +32,7 @@ def markdown():
     executor = preprocessors.ExecutePreprocessor()
     exporter = MarkdownExporter()
     for notebook in get_files("ipynb"):
-        with open(notebook) as nb_file:
+        with open(notebook, encoding="utf8") as nb_file:
             nb = nbformat.read(nb_file, as_version=4)
         executor.preprocess(nb)
 
@@ -52,7 +52,7 @@ def clean():
     exporter = NotebookExporter(config=c)
     for notebook in get_files("ipynb"):
 
-        with open(notebook) as nb_file:
+        with open(notebook, encoding="utf8") as nb_file:
             nb = nbformat.read(nb_file, as_version=4)
 
         if not nb.cells[-1]["source"]:
@@ -62,7 +62,7 @@ def clean():
             cell["id"] = f"{notebook.stem}-{cell_id}"
 
         ipynb, _ = exporter.from_notebook_node(nb)
-        with open(f"{notebook.stem}.ipynb", "w") as writable:
+        with open(f"{notebook.stem}.ipynb", "w", encoding="utf8") as writable:
             writable.write(ipynb)
 
 
