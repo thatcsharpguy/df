@@ -59,7 +59,7 @@ def clean():
         for cell in nb.cells:
             if cell["cell_type"] == "code":
                 tags = cell.get("metadata", dict()).get("tags", [])
-                if "non-formatted" not in tags:
+                if "not-formatted" not in tags:
                     try:
                         result = format_str(cell["source"], mode=file_mode)
                         if result[-1] == "\n" and cell["source"] != "\n":
