@@ -1,7 +1,7 @@
 import click
 from pathlib import Path
 import nbformat
-from nbconvert import MarkdownExporter, NotebookExporter, preprocessors
+from nbconvert import MarkdownExporter, HTMLExporter, NotebookExporter, preprocessors
 from black import format_str, FileMode, InvalidInput
 import re
 
@@ -41,6 +41,22 @@ def markdown():
             nb.cells.pop()
         markdown, _ = exporter.from_notebook_node(nb)
         with open(f"{notebook.stem}.md", "w") as writable:
+            writable.write(markdown)
+
+
+@cli.command()
+def html():
+    executor = preprocessors.ExecutePreprocessor()
+    exporter = HTMLExporter()
+    for notebook in get_files("ipynb"):
+        with open(notebook, encoding="utf8") as nb_file:
+            nb = nbformat.read(nb_file, as_version=4)
+        executor.preprocess(nb)
+
+        if not nb.cells[-1]["source"]:
+            nb.cells.pop()
+        markdown, _ = exporter.from_notebook_node(nb)
+        with open(f"{notebook.stem}.html", "w") as writable:
             writable.write(markdown)
 
 
