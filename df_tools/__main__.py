@@ -5,6 +5,7 @@ from nbconvert import MarkdownExporter, HTMLExporter, NotebookExporter, preproce
 from black import format_str, FileMode, InvalidInput
 import re
 
+from traitlets.config import Config
 from nbconvert.preprocessors import ClearOutputPreprocessor
 
 FILE_PATTERN = re.compile(r"^[0-9]{2}\w?-[a-zA-Z-]+$")
@@ -13,12 +14,6 @@ FILE_PATTERN = re.compile(r"^[0-9]{2}\w?-[a-zA-Z-]+$")
 @click.group()
 def cli():
     pass
-
-
-from traitlets.config import Config
-
-c = Config()
-c.NotebookExporter.preprocessors = [ClearOutputPreprocessor()]
 
 
 def get_files(extension: str):
@@ -40,7 +35,7 @@ def markdown():
         if not nb.cells[-1]["source"]:
             nb.cells.pop()
         markdown, _ = exporter.from_notebook_node(nb)
-        with open(f"{notebook.stem}.md", "w") as writable:
+        with open(f"{notebook.stem}.md", "w", encoding="utf8") as writable:
             writable.write(markdown)
 
 
@@ -55,37 +50,54 @@ def html():
 
         if not nb.cells[-1]["source"]:
             nb.cells.pop()
-        markdown, _ = exporter.from_notebook_node(nb)
-        with open(f"{notebook.stem}.html", "w") as writable:
-            writable.write(markdown)
+        html, _ = exporter.from_notebook_node(nb)
+        with open(f"{notebook.stem}.html", "w", encoding="utf8") as writable:
+            writable.write(html)
+
+
+def _delete_generated_files():
+    for md in get_files("md"):
+        md.unlink()
+    for html in get_files("html"):
+        html.unlink()
+
+
+def format_code_cells(notebobk):
+    file_mode = FileMode()
+    for cell in notebobk.cells:
+        if cell["cell_type"] == "code":
+            tags = cell.get("metadata", dict()).get("tags", [])
+            if "not-formatted" not in tags:
+                try:
+                    result = format_str(cell["source"], mode=file_mode)
+                    if result[-1] == "\n" and cell["source"] != "\n":
+                        result = result[:-1]
+                        cell["source"] = result
+                except InvalidInput:
+                    pass
 
 
 @cli.command()
 def clean():
-    for md in get_files("md"):
-        md.unlink()
-    exporter = NotebookExporter(config=c)
-    file_mode = FileMode()
-    for notebook in get_files("ipynb"):
+    _delete_generated_files()
+    config = Config()
+    config.NotebookExporter.preprocessors = [ClearOutputPreprocessor()]
+    exporter = NotebookExporter(config=config)
 
+    for notebook in get_files("ipynb"):
         with open(notebook, encoding="utf8") as nb_file:
             nb = nbformat.read(nb_file, as_version=4)
+
         if not nb.cells[-1]["source"]:
             nb.cells.pop()
-        for cell in nb.cells:
-            if cell["cell_type"] == "code":
-                tags = cell.get("metadata", dict()).get("tags", [])
-                if "not-formatted" not in tags:
-                    try:
-                        result = format_str(cell["source"], mode=file_mode)
-                        if result[-1] == "\n" and cell["source"] != "\n":
-                            result = result[:-1]
-                            cell["source"] = result
-                    except InvalidInput:
-                        print(notebook.name, cell["source"])
+
+        format_code_cells(nb)
+
         for cell_id, cell in enumerate(nb.cells):
             cell["id"] = f"{notebook.stem}-{cell_id}"
+
         ipynb, _ = exporter.from_notebook_node(nb)
+
         with open(f"{notebook.stem}.ipynb", "w", encoding="utf8") as writable:
             writable.write(ipynb)
 
