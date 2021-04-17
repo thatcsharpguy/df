@@ -1,6 +1,8 @@
 import click
 from pathlib import Path
 import nbformat
+import sys
+import asyncio
 from nbconvert import MarkdownExporter, HTMLExporter, NotebookExporter, preprocessors
 from black import format_str, FileMode, InvalidInput
 import re
@@ -10,6 +12,9 @@ from nbconvert.preprocessors import ClearOutputPreprocessor
 
 FILE_PATTERN = re.compile(r"^[0-9]{2}\w?-[a-zA-Z-]+$")
 
+# See https://bugs.python.org/issue37373 :(
+if sys.version_info[0] == 3 and sys.version_info[1] >= 8 and sys.platform.startswith('win'):
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 @click.group()
 def cli():
@@ -34,6 +39,7 @@ def markdown():
 
         if not nb.cells[-1]["source"]:
             nb.cells.pop()
+
         markdown, _ = exporter.from_notebook_node(nb)
         with open(f"{notebook.stem}.md", "w", encoding="utf8") as writable:
             writable.write(markdown)
@@ -97,7 +103,6 @@ def clean():
             cell["id"] = f"{notebook.stem}-{cell_id}"
 
         ipynb, _ = exporter.from_notebook_node(nb)
-
         with open(f"{notebook.stem}.ipynb", "w", encoding="utf8") as writable:
             writable.write(ipynb)
 
