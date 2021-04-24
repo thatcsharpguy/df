@@ -8,6 +8,8 @@ ipympl = "*"
 jupyterlab = "*"
 matplotlib = "*"
 seaborn = "*"
+pandas = "*"
+scikit-learn = "*"
 
 [dev-packages]
 click = "*"
