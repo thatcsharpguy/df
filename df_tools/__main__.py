@@ -13,8 +13,13 @@ from nbconvert.preprocessors import ClearOutputPreprocessor
 FILE_PATTERN = re.compile(r"^[0-9]{2}\w?-[a-zA-Z-]+$")
 
 # See https://bugs.python.org/issue37373 :(
-if sys.version_info[0] == 3 and sys.version_info[1] >= 8 and sys.platform.startswith('win'):
+if (
+    sys.version_info[0] == 3
+    and sys.version_info[1] >= 8
+    and sys.platform.startswith("win")
+):
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
 
 @click.group()
 def cli():

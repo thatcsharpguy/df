@@ -15,6 +15,7 @@ scikit-learn = "*"
 click = "*"
 isort = "*"
 black = ">18.*"
+jupyterlab-spellchecker = "*"
 
 [requires]
 python_version = "3.8"
