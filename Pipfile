@@ -16,6 +16,7 @@ click = "*"
 isort = "*"
 black = ">18.*"
 jupyterlab-spellchecker = "*"
+colour = "*"
 
 [requires]
 python_version = "3.8"
