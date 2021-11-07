@@ -42,7 +42,17 @@ Quiero hacer algo diferente a solo los tutoriales que uno ve por aquí y por all
 
 ## Sesiones 🏫
 
- - 01: Jupyter Lab (Sábado 13 de marzo 2021)
+ - 00: Introducción al curso, [https://youtu.be/RT1VpNAwEWg](https://youtu.be/RT1VpNAwEWg)
+ - 00a: Jupyter y Docker, [https://youtu.be/ppl2y4iP2yE](https://youtu.be/ppl2y4iP2yE)
+ - 01: Jupyter Lab, [https://youtu.be/QclZayjU8K8](https://youtu.be/QclZayjU8K8)
+ - 02: Cómputo vectorizado, [https://youtu.be/iLIQykiASs4](https://youtu.be/iLIQykiASs4)
+ - 02a: Más funcionalidades de NumPy - Data Fundamentals, [https://youtu.be/0_QIYyMBZN0](https://youtu.be/0_QIYyMBZN0)
+ - 03: Números y NumPy, [https://youtu.be/YwHQC4KEtBE](https://youtu.be/YwHQC4KEtBE)
+ - 04: Haciendo buenas gráficas, [https://youtu.be/7vZY6JdswKs](https://youtu.be/7vZY6JdswKs)
+ - 05: Vectores y Álgebra Lineal, [https://youtu.be/bgEML8Re2ks](https://youtu.be/bgEML8Re2ks)
+ - 06: Matrices y Álgebra Lineal, [https://youtu.be/Vdn-8j8yFSk](https://youtu.be/Vdn-8j8yFSk)
+ - 07: Optimización I, [https://youtu.be/tzKtffhJ31Y](https://youtu.be/tzKtffhJ31Y)
+ - 08: Optimización II, [https://youtu.be/J4eCD38WF5k](https://youtu.be/J4eCD38WF5k)
  
 ## Libros  📚
 
